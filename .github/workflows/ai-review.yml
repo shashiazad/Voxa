@@ -1,0 +1,36 @@
+name: ai-review
+# Every pull request is reviewed by shashiazad/agentic-pr-reviewer (planner -> reviewer -> critic -> commenter).
+# Runs on `pull_request`, never `pull_request_target`: the PR's code is only read as a diff, and secrets are not
+# exposed to forks (GitHub withholds them), so fork PRs skip the review instead of failing.
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+  pull-requests: write       # post the review + labels; it cannot push or edit branches
+
+concurrency:
+  group: ai-review-${{ github.event.pull_request.number }}
+  cancel-in-progress: true   # a new push supersedes the review of the old commit
+
+jobs:
+  review:
+    if: github.event.pull_request.draft == false && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      # The reviewer's "openai" provider talks to any OpenAI-compatible endpoint, so the Groq key the project already
+      # uses powers it. To switch to Gemini: provider gemini + gemini_api_key: ${{ secrets.GEMINI_API_KEY }}.
+      - uses: shashiazad/agentic-pr-reviewer@v1
+        env:
+          OPENAI_BASE_URL: https://api.groq.com/openai/v1
+          OPENAI_API_BASE: https://api.groq.com/openai/v1
+        with:
+          provider: openai
+          openai_api_key: ${{ secrets.GROQ_API_KEY }}
+          model_name: ${{ vars.REVIEW_MODEL || 'openai/gpt-oss-120b' }}
+          config_path: .ai-reviewer.json
+          fail_on_errors: "false"      # advisory comments; the human reviewer + CI decide the merge

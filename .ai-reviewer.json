@@ -1,0 +1,13 @@
+{
+  "persona": "balanced",
+  "focus_areas": ["agent/**", "api/**", "shared/**", "web/**", "infra/**", "tests/**", ".github/**"],
+  "ignore_paths": [
+    "docs/reports/", "docs/screenshots/", "web/package-lock.json", "samples/", "tests/fixtures/", "models/", "**/*.wav"
+  ],
+  "linters": [],
+  "commenter": {
+    "enable_approval": false,
+    "blocking_severities": ["error"],
+    "enable_size_labels": true
+  }
+}

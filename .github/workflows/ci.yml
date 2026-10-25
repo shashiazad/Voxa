@@ -5,6 +5,12 @@ on:
   workflow_dispatch:
   schedule: [{ cron: "0 4 * * *" }]     # nightly perf gate
 
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions: { contents: read }
+
 jobs:
   python:
     runs-on: ubuntu-latest
@@ -50,6 +56,15 @@ jobs:
       - uses: actions/checkout@v4
       - uses: azure/setup-helm@v4
       - run: helm lint infra/helm/voxa && helm template voxa infra/helm/voxa > /dev/null
+
+  # The single required status check for branch protection: green only if every PR job is green.
+  ci-gate:
+    if: always() && github.event_name != 'schedule'
+    needs: [python, web, helm]
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          [ "${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}" = "false" ]
 
   # Full stack on a runner: real WebRTC, real Groq. Fails the build if p95 voice-to-voice, false/missed interruption
   # rates or echo self-interruptions break the budget (tests/perf/perf.py gate). Needs the GROQ_API_KEY secret.
