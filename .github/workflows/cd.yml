@@ -1,0 +1,81 @@
+name: cd
+# Builds and publishes the three images once CI is green on main, deploys main to staging automatically,
+# and deploys version tags (v*) to production behind the "production" environment's required reviewers.
+on:
+  workflow_run: { workflows: [ci], types: [completed], branches: [main] }
+  push: { tags: ["v*"] }
+  workflow_dispatch:
+    inputs:
+      deploy: { description: "Deploy to", type: choice, options: [none, staging, production], default: none }
+
+permissions: { contents: read, packages: write }
+
+env:
+  REGISTRY: ghcr.io/${{ github.repository_owner }}
+
+jobs:
+  images:
+    # Only after a green CI on main, a version tag, or a manual run. (workflow_run also fires for failed CI.)
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    outputs: { tag: "${{ steps.v.outputs.tag }}" }
+    strategy:
+      matrix: { service: [agent, api, web] }
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: "${{ github.event.workflow_run.head_sha || github.sha }}" }
+      - id: v
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then echo "tag=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+          else echo "tag=sha-$(git rev-parse --short=12 HEAD)" >> "$GITHUB_OUTPUT"; fi
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with: { registry: ghcr.io, username: "${{ github.actor }}", password: "${{ secrets.GITHUB_TOKEN }}" }
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ${{ matrix.service }}/Dockerfile
+          push: true
+          tags: ${{ env.REGISTRY }}/voxa-${{ matrix.service }}:${{ steps.v.outputs.tag }}
+          cache-from: type=gha,scope=${{ matrix.service }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.service }}
+
+  staging:
+    needs: images
+    if: github.event_name == 'workflow_run' || (github.event_name == 'workflow_dispatch' && inputs.deploy == 'staging')
+    runs-on: ubuntu-latest
+    environment: staging
+    concurrency: { group: deploy-staging, cancel-in-progress: false }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: azure/setup-helm@v4
+      - name: Deploy
+        env: { KUBECONFIG_B64: "${{ secrets.KUBECONFIG_B64 }}" }
+        run: |
+          echo "$KUBECONFIG_B64" | base64 -d > "$RUNNER_TEMP/kubeconfig"; export KUBECONFIG="$RUNNER_TEMP/kubeconfig"
+          helm upgrade --install voxa infra/helm/voxa -n voxa-staging --create-namespace \
+            -f infra/helm/voxa/values.yaml ${{ vars.STAGING_VALUES && format('-f {0}', vars.STAGING_VALUES) || '' }} \
+            --set image.registry=$REGISTRY --set image.tag=${{ needs.images.outputs.tag }} \
+            --atomic --timeout 10m
+      - name: Smoke test
+        run: curl -fsS --retry 10 --retry-delay 6 "${{ vars.STAGING_API_URL }}/healthz"
+
+  production:
+    needs: images
+    if: startsWith(github.ref, 'refs/tags/v') || (github.event_name == 'workflow_dispatch' && inputs.deploy == 'production')
+    runs-on: ubuntu-latest
+    environment: production        # configure required reviewers on this environment
+    concurrency: { group: deploy-production, cancel-in-progress: false }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: azure/setup-helm@v4
+      - name: Deploy (rolling, calls drain; --atomic rolls back on failure)
+        env: { KUBECONFIG_B64: "${{ secrets.KUBECONFIG_B64 }}" }
+        run: |
+          echo "$KUBECONFIG_B64" | base64 -d > "$RUNNER_TEMP/kubeconfig"; export KUBECONFIG="$RUNNER_TEMP/kubeconfig"
+          helm upgrade --install voxa infra/helm/voxa -n voxa --create-namespace \
+            -f infra/helm/voxa/values.yaml ${{ vars.PRODUCTION_VALUES && format('-f {0}', vars.PRODUCTION_VALUES) || '' }} \
+            --set image.registry=$REGISTRY --set image.tag=${{ needs.images.outputs.tag }} \
+            --atomic --timeout 20m
+      - name: Smoke test
+        run: curl -fsS --retry 10 --retry-delay 6 "${{ vars.PRODUCTION_API_URL }}/healthz"
