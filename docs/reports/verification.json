@@ -1,0 +1,32 @@
+{
+ "meta": {
+  "when": "2026-10-25",
+  "tag": "final verification pass"
+ },
+ "items": [
+  [
+   "Python unit + integration tests (pytest)",
+   "274 passed (state machine, normalizer, chunker, backchannel, history truncation, session scenarios, tools, RLS, API/RBAC, privacy/retention)"
+  ],
+  [
+   "Browser end-to-end (Playwright, Chromium, fake mic)",
+   "11/11 passed: dashboard tour, RBAC, widget on a third-party origin incl. CSAT"
+  ],
+  [
+   "Acme sample tenant over real WebRTC (acme_e2e.py)",
+   "3/4 on the final stack: RAG answer, order lookup, human handoff passed; the ticket flow failed because the fallback LLM (gpt-oss-20b) asked for a subject instead of deriving one. It passed 4/4 earlier with qwen/qwen3.8-27b, whose free daily token quota was exhausted by testing."
+  ],
+  [
+   "Recording consent (privacy_e2e.py recording)",
+   "yes \u2192 asked, recorded 34.6 s mixed 16 kHz WAV, uploaded, signed link served; no \u2192 nothing recorded"
+  ],
+  [
+   "Session resume (privacy_e2e.py resume)",
+   "agent process killed mid-call \u2192 API re-dispatched a worker into the same room \u2192 no second greeting, reconnect line spoken, new question answered"
+  ],
+  [
+   "Helm chart",
+   "`helm lint` and `helm template` pass; NOT applied to a live cluster"
+  ]
+ ]
+}

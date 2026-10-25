@@ -1,0 +1,17 @@
+{{- if .Values.observability.grafanaDashboard }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-grafana-dashboard
+  labels: { grafana_dashboard: "1" }
+data:
+  voxa.json: |-
+{{ .Files.Get "files/voxa-dashboard.json" | indent 4 }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata: { name: {{ .Release.Name }}-prometheus-rules }
+data:
+  rules.yml: |-
+{{ .Files.Get "files/rules.yml" | indent 4 }}
+{{- end }}

@@ -1,0 +1,322 @@
+{
+ "mode": "latency",
+ "results": [
+  {
+   "kind": "latency",
+   "q": "status",
+   "v2v_ms": 1168.6653742799535,
+   "server": {
+    "gen": 6,
+    "voice_to_voice_ms": 969.2635829997016,
+    "llm": "openai/gpt-oss-20b",
+    "stt_ms": 661.1404580035014,
+    "llm_ttft_ms": 468.1431250064634,
+    "tts_ttfb_ms": 128.25879199954215
+   }
+  },
+  {
+   "kind": "latency",
+   "q": "q_returns",
+   "v2v_ms": 1359.8903326201253,
+   "server": {
+    "gen": 6,
+    "voice_to_voice_ms": 1198.0632079939824,
+    "llm": "openai/gpt-oss-20b",
+    "stt_ms": 550.8605409995653,
+    "llm_ttft_ms": 464.77345800667536,
+    "tts_ttfb_ms": 709.7106669971254
+   }
+  },
+  {
+   "kind": "latency",
+   "q": "q_order",
+   "v2v_ms": 1348.9649582770653,
+   "server": {
+    "gen": 6,
+    "voice_to_voice_ms": 1236.9915839954047,
+    "llm": "openai/gpt-oss-20b",
+    "stt_ms": 582.228083992959,
+    "llm_ttft_ms": 777.8714999876684,
+    "tts_ttfb_ms": 122.53912500455044
+   }
+  },
+  {
+   "kind": "latency",
+   "q": "status",
+   "v2v_ms": 1978.6150003201328,
+   "server": {
+    "gen": 6,
+    "voice_to_voice_ms": 1789.243418010301,
+    "llm": "openai/gpt-oss-20b",
+    "stt_ms": 1365.7292510033585,
+    "llm_ttft_ms": 1310.9564589976799,
+    "tts_ttfb_ms": 99.21920800115913
+   }
+  },
+  {
+   "kind": "latency",
+   "q": "q_returns",
+   "v2v_ms": 1887.621333647985,
+   "server": {
+    "gen": 6,
+    "voice_to_voice_ms": 1749.124583991943,
+    "llm": "openai/gpt-oss-20b",
+    "stt_ms": 1083.6645419913111,
+    "llm_ttft_ms": 1577.4660009919899,
+    "tts_ttfb_ms": -1048.2130009913817
+   }
+  },
+  {
+   "kind": "latency",
+   "q": "q_order",
+   "v2v_ms": 1046.3327923207544,
+   "server": {
+    "gen": 6,
+    "voice_to_voice_ms": 947.1780000021681,
+    "llm": "qwen/qwen3.8-27b",
+    "stt_ms": 357.5682500086259,
+    "llm_ttft_ms": 861.8063340109074,
+    "tts_ttfb_ms": 68.18841698986944
+   }
+  },
+  {
+   "kind": "latency",
+   "q": "status",
+   "v2v_ms": 993.3827083441429,
+   "server": {
+    "gen": 6,
+    "voice_to_voice_ms": 843.1935839907965,
+    "llm": "openai/gpt-oss-20b",
+    "stt_ms": 344.1909169923747,
+    "llm_ttft_ms": 361.7651670065243,
+    "tts_ttfb_ms": 131.4817919919733
+   }
+  },
+  {
+   "kind": "latency",
+   "q": "q_returns",
+   "v2v_ms": 890.6736666103825,
+   "server": {
+    "gen": 4,
+    "voice_to_voice_ms": 766.6977499902714,
+    "llm": "openai/gpt-oss-20b",
+    "stt_ms": 419.65912499290425,
+    "llm_ttft_ms": 588.5654590092599,
+    "tts_ttfb_ms": 121.68549999478273
+   }
+  },
+  {
+   "kind": "latency",
+   "q": "q_order",
+   "v2v_ms": 1131.6778743057512,
+   "server": {
+    "gen": 6,
+    "voice_to_voice_ms": 1007.0122500037542,
+    "llm": "openai/gpt-oss-20b",
+    "stt_ms": 470.50633300386835,
+    "llm_ttft_ms": 881.9432500022231,
+    "tts_ttfb_ms": 84.46445799199864
+   }
+  },
+  {
+   "kind": "latency",
+   "q": "status",
+   "v2v_ms": 1165.9592913347296,
+   "server": {
+    "gen": 4,
+    "voice_to_voice_ms": 1014.2292509990511,
+    "llm": "openai/gpt-oss-20b",
+    "stt_ms": 406.5873340005055,
+    "llm_ttft_ms": 503.44562499958556,
+    "tts_ttfb_ms": 121.95537499792408
+   }
+  },
+  {
+   "kind": "latency",
+   "q": "q_returns",
+   "v2v_ms": 1593.7457916443236,
+   "server": {
+    "gen": 6,
+    "voice_to_voice_ms": 1385.9617090056418,
+    "llm": "openai/gpt-oss-20b",
+    "stt_ms": 479.12333300337195,
+    "llm_ttft_ms": 1240.6181669939542,
+    "tts_ttfb_ms": 120.17029200796969
+   }
+  },
+  {
+   "kind": "latency",
+   "q": "q_order",
+   "v2v_ms": 1003.9833332994021,
+   "server": {
+    "gen": 6,
+    "voice_to_voice_ms": 869.32662500476,
+    "llm": "openai/gpt-oss-20b",
+    "stt_ms": 389.82158301223535,
+    "llm_ttft_ms": 407.041250000475,
+    "tts_ttfb_ms": 133.2152090035379
+   }
+  },
+  {
+   "kind": "latency",
+   "q": "status",
+   "v2v_ms": 1458.4537913324311,
+   "server": {
+    "gen": 6,
+    "voice_to_voice_ms": 1271.034500998212,
+    "llm": "openai/gpt-oss-20b",
+    "stt_ms": 708.8997509999899,
+    "llm_ttft_ms": 732.9591250017984,
+    "tts_ttfb_ms": 128.99966699478682
+   }
+  },
+  {
+   "kind": "latency",
+   "q": "q_returns",
+   "v2v_ms": 1430.9640416759066,
+   "server": {
+    "gen": 4,
+    "voice_to_voice_ms": 1274.0615009970497,
+    "llm": "openai/gpt-oss-20b",
+    "stt_ms": 432.85637500230223,
+    "llm_ttft_ms": 712.1810840035323,
+    "tts_ttfb_ms": 118.3326250029495
+   }
+  },
+  {
+   "kind": "latency",
+   "q": "q_order",
+   "v2v_ms": 1079.456958337687,
+   "server": {
+    "gen": 6,
+    "voice_to_voice_ms": 970.1887499977602,
+    "llm": "openai/gpt-oss-20b",
+    "stt_ms": 588.9970419957535,
+    "llm_ttft_ms": 577.2857509873575,
+    "tts_ttfb_ms": 70.72262500878423
+   }
+  },
+  {
+   "kind": "latency",
+   "q": "status",
+   "v2v_ms": 1189.5697502768598,
+   "server": {
+    "gen": 6,
+    "voice_to_voice_ms": 1033.44387600373,
+    "llm": "openai/gpt-oss-20b",
+    "stt_ms": 370.0058340036776,
+    "llm_ttft_ms": 529.0207920043031,
+    "tts_ttfb_ms": 123.19149999530055
+   }
+  },
+  {
+   "kind": "latency",
+   "q": "q_returns",
+   "v2v_ms": 887.725499633234,
+   "server": {
+    "gen": 4,
+    "voice_to_voice_ms": 709.5935840043239,
+    "llm": "openai/gpt-oss-20b",
+    "stt_ms": 535.8770009916043,
+    "llm_ttft_ms": 510.0743330112891,
+    "tts_ttfb_ms": 138.9759169978788
+   }
+  },
+  {
+   "kind": "latency",
+   "q": "q_order",
+   "v2v_ms": 1092.387542303186,
+   "server": {
+    "gen": 7,
+    "voice_to_voice_ms": 954.2433340102434,
+    "llm": "openai/gpt-oss-20b",
+    "stt_ms": 401.7412920075003,
+    "llm_ttft_ms": 435.89262598834466,
+    "tts_ttfb_ms": 109.5142910053255
+   }
+  },
+  {
+   "kind": "latency",
+   "q": "status",
+   "v2v_ms": 1046.6754583176225,
+   "server": {
+    "gen": 6,
+    "voice_to_voice_ms": 886.5212499949848,
+    "llm": "openai/gpt-oss-20b",
+    "stt_ms": 443.53970799420495,
+    "llm_ttft_ms": 497.3851249960717,
+    "tts_ttfb_ms": 274.4782499939902
+   }
+  },
+  {
+   "kind": "latency",
+   "q": "q_returns",
+   "v2v_ms": 1209.3498336616904,
+   "server": {
+    "gen": 6,
+    "voice_to_voice_ms": 995.8254590019351,
+    "llm": "openai/gpt-oss-20b",
+    "stt_ms": 709.2881249991478,
+    "llm_ttft_ms": 345.7403329957742,
+    "tts_ttfb_ms": 627.8690010076389
+   }
+  },
+  {
+   "kind": "latency",
+   "q": "q_order",
+   "v2v_ms": 1229.4865412986837,
+   "server": {
+    "gen": 6,
+    "voice_to_voice_ms": 1108.7809579912573,
+    "llm": "openai/gpt-oss-20b",
+    "stt_ms": 395.83108299120795,
+    "llm_ttft_ms": 975.4492919892073,
+    "tts_ttfb_ms": 110.66908300563227
+   }
+  },
+  {
+   "kind": "latency",
+   "q": "status",
+   "v2v_ms": 1067.345999297686,
+   "server": {
+    "gen": 6,
+    "voice_to_voice_ms": 932.2297089966014,
+    "llm": "openai/gpt-oss-20b",
+    "stt_ms": 359.58000100799836,
+    "llm_ttft_ms": 761.8041249952512,
+    "tts_ttfb_ms": 120.2629170002183
+   }
+  },
+  {
+   "kind": "latency",
+   "q": "q_returns",
+   "v2v_ms": 1232.4660006561317,
+   "server": {
+    "gen": 4,
+    "voice_to_voice_ms": 1074.1341249959078,
+    "llm": "openai/gpt-oss-20b",
+    "stt_ms": 485.8901249972405,
+    "llm_ttft_ms": 434.0481249964796,
+    "tts_ttfb_ms": 140.11212499463
+   }
+  },
+  {
+   "kind": "latency",
+   "q": "q_order",
+   "v2v_ms": 1463.5130832903087,
+   "server": {
+    "gen": 6,
+    "voice_to_voice_ms": 1333.4400009916862,
+    "llm": "openai/gpt-oss-20b",
+    "stt_ms": 861.9315010000719,
+    "llm_ttft_ms": 179.92283300554845,
+    "tts_ttfb_ms": 814.4871669937856
+   }
+  }
+ ],
+ "meta": {
+  "when": "2026-10-25 03:25:30",
+  "host": "macOS-27.0.1-arm64-arm-64bit",
+  "tag": "Groq qwen3.8-27b (+fallback chain) + Groq Whisper turbo + local Piper; LiveKit 1.13.10; one turn per 16 s"
+ }
+}

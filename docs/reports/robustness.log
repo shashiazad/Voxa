@@ -1,0 +1,113 @@
+interrupt#0: {"confirmed": true, "stop_ms": 369.17766695842147, "audio_after_pause": 0, "missed": false, "late": false}
+interrupt#1: {"confirmed": true, "stop_ms": 326.9237499916926, "audio_after_pause": 0, "missed": false, "late": false}
+interrupt#2: {"confirmed": true, "stop_ms": 355.8959169895388, "audio_after_pause": 0, "missed": false, "late": false}
+interrupt#3: {"confirmed": true, "stop_ms": 378.54683300247416, "audio_after_pause": 0, "missed": false, "late": false}
+interrupt#4: {"confirmed": true, "stop_ms": 349.59599998546764, "audio_after_pause": 0, "missed": false, "late": false}
+interrupt#5: {"confirmed": true, "stop_ms": 364.94599998695776, "audio_after_pause": 0, "missed": false, "late": false}
+interrupt#6: {"confirmed": true, "stop_ms": 330.7033749879338, "audio_after_pause": 0, "missed": false, "late": false}
+interrupt#7: {"confirmed": true, "stop_ms": 383.94758402137086, "audio_after_pause": 0, "missed": false, "late": false}
+cough#0: {"what": "cough", "stage1": 0, "stage2": 0, "outcomes": []}
+cough#1: {"what": "cough", "stage1": 0, "stage2": 0, "outcomes": []}
+cough#2: {"what": "cough", "stage1": 0, "stage2": 0, "outcomes": []}
+cough#3: {"what": "cough", "stage1": 0, "stage2": 0, "outcomes": []}
+cough#4: {"what": "cough", "stage1": 0, "stage2": 0, "outcomes": []}
+cough#5: {"what": "cough", "stage1": 0, "stage2": 0, "outcomes": []}
+cough#6: {"what": "cough", "stage1": 0, "stage2": 0, "outcomes": []}
+cough#7: {"what": "cough", "stage1": 0, "stage2": 0, "outcomes": []}
+door_slam#0: {"what": "door_slam", "stage1": 0, "stage2": 0, "outcomes": []}
+door_slam#1: {"what": "door_slam", "stage1": 0, "stage2": 0, "outcomes": []}
+door_slam#2: {"what": "door_slam", "stage1": 0, "stage2": 0, "outcomes": []}
+door_slam#3: {"what": "door_slam", "stage1": 0, "stage2": 0, "outcomes": []}
+door_slam#4: {"what": "door_slam", "stage1": 0, "stage2": 0, "outcomes": []}
+door_slam#5: {"what": "door_slam", "stage1": 0, "stage2": 0, "outcomes": []}
+door_slam#6: {"what": "door_slam", "stage1": 0, "stage2": 0, "outcomes": []}
+door_slam#7: {"what": "door_slam", "stage1": 0, "stage2": 0, "outcomes": []}
+backchannel#0: {"what": "backchannel", "stage1": 1, "stage2": 0, "outcomes": ["false"]}
+backchannel#1: {"what": "backchannel", "stage1": 1, "stage2": 0, "outcomes": ["backchannel"]}
+backchannel#2: {"what": "backchannel", "stage1": 1, "stage2": 0, "outcomes": ["false"]}
+backchannel#3: {"what": "backchannel", "stage1": 1, "stage2": 0, "outcomes": ["backchannel"]}
+backchannel#4: {"what": "backchannel", "stage1": 1, "stage2": 0, "outcomes": ["backchannel"]}
+backchannel#5: {"what": "backchannel", "stage1": 1, "stage2": 0, "outcomes": ["backchannel"]}
+backchannel#6: {"what": "backchannel", "stage1": 1, "stage2": 0, "outcomes": ["false"]}
+backchannel#7: {"what": "backchannel", "stage1": 1, "stage2": 0, "outcomes": ["backchannel"]}
+noise_while_speaking:cafe@15dB#0: {"what": "noise:cafe", "stage1": 0, "stage2": 0, "outcomes": []}
+noise_while_speaking:cafe@15dB#1: {"what": "noise:cafe", "stage1": 0, "stage2": 0, "outcomes": []}
+noise_while_speaking:cafe@15dB#2: {"what": "noise:cafe", "stage1": 2, "stage2": 1, "outcomes": ["echo"]}
+noise_while_speaking:cafe@15dB#3: {"what": "noise:cafe", "stage1": 0, "stage2": 0, "outcomes": []}
+noise_while_speaking:cafe@5dB#0: {"what": "noise:cafe", "stage1": 1, "stage2": 1, "outcomes": []}
+noise_while_speaking:cafe@5dB#1: {"what": "noise:cafe", "stage1": 1, "stage2": 1, "outcomes": []}
+noise_while_speaking:cafe@5dB#2: {"what": "noise:cafe", "stage1": 1, "stage2": 1, "outcomes": []}
+noise_while_speaking:cafe@5dB#3: {"what": "noise:cafe", "stage1": 1, "stage2": 1, "outcomes": []}
+noise_while_speaking:traffic@15dB#0: {"what": "noise:traffic", "stage1": 0, "stage2": 0, "outcomes": []}
+noise_while_speaking:traffic@15dB#1: {"what": "noise:traffic", "stage1": 0, "stage2": 0, "outcomes": []}
+noise_while_speaking:traffic@15dB#2: {"what": "noise:traffic", "stage1": 0, "stage2": 0, "outcomes": []}
+noise_while_speaking:traffic@15dB#3: {"what": "noise:traffic", "stage1": 0, "stage2": 0, "outcomes": []}
+noise_while_speaking:traffic@5dB#0: {"what": "noise:traffic", "stage1": 0, "stage2": 0, "outcomes": []}
+noise_while_speaking:traffic@5dB#1: {"what": "noise:traffic", "stage1": 0, "stage2": 0, "outcomes": []}
+noise_while_speaking:traffic@5dB#2: {"what": "noise:traffic", "stage1": 0, "stage2": 0, "outcomes": []}
+noise_while_speaking:traffic@5dB#3: {"what": "noise:traffic", "stage1": 0, "stage2": 0, "outcomes": []}
+noise_while_speaking:tv@15dB#0: {"what": "noise:tv", "stage1": 1, "stage2": 1, "outcomes": []}
+noise_while_speaking:tv@15dB#1: {"what": "noise:tv", "stage1": 1, "stage2": 1, "outcomes": []}
+noise_while_speaking:tv@15dB#2: {"what": "noise:tv", "stage1": 0, "stage2": 0, "outcomes": []}
+noise_while_speaking:tv@15dB#3: {"what": "noise:tv", "stage1": 1, "stage2": 1, "outcomes": []}
+noise_while_speaking:tv@5dB#0: {"what": "noise:tv", "stage1": 1, "stage2": 1, "outcomes": []}
+noise_while_speaking:tv@5dB#1: {"what": "noise:tv", "stage1": 1, "stage2": 1, "outcomes": []}
+noise_while_speaking:tv@5dB#2: {"what": "noise:tv", "stage1": 1, "stage2": 1, "outcomes": []}
+noise_while_speaking:tv@5dB#3: {"what": "noise:tv", "stage1": 1, "stage2": 0, "outcomes": ["echo"]}
+noise_while_speaking:keyboard@15dB#0: {"what": "noise:keyboard", "stage1": 0, "stage2": 0, "outcomes": []}
+noise_while_speaking:keyboard@15dB#1: {"what": "noise:keyboard", "stage1": 0, "stage2": 0, "outcomes": []}
+noise_while_speaking:keyboard@15dB#2: {"what": "noise:keyboard", "stage1": 0, "stage2": 0, "outcomes": []}
+noise_while_speaking:keyboard@15dB#3: {"what": "noise:keyboard", "stage1": 0, "stage2": 0, "outcomes": []}
+noise_while_speaking:keyboard@5dB#0: {"what": "noise:keyboard", "stage1": 0, "stage2": 0, "outcomes": []}
+noise_while_speaking:keyboard@5dB#1: {"what": "noise:keyboard", "stage1": 0, "stage2": 0, "outcomes": []}
+noise_while_speaking:keyboard@5dB#2: {"what": "noise:keyboard", "stage1": 0, "stage2": 0, "outcomes": []}
+noise_while_speaking:keyboard@5dB#3: {"what": "noise:keyboard", "stage1": 0, "stage2": 0, "outcomes": []}
+mid_utterance_pause#0: {"premature": 0, "replied": true}
+mid_utterance_pause#1: {"premature": 0, "replied": true}
+mid_utterance_pause#2: {"premature": 0, "replied": true}
+mid_utterance_pause#3: {"premature": 0, "replied": true}
+noisy_speech:cafe@5dB#0: {"noise": "cafe", "snr": 5, "transcript_ok": false, "replied": true, "noise_only_replies": 0}
+noisy_speech:cafe@5dB#1: {"noise": "cafe", "snr": 5, "transcript_ok": false, "replied": true, "noise_only_replies": 0}
+noisy_speech:cafe@10dB#0: {"noise": "cafe", "snr": 10, "transcript_ok": false, "replied": true, "noise_only_replies": 0}
+noisy_speech:cafe@10dB#1: {"noise": "cafe", "snr": 10, "transcript_ok": false, "replied": true, "noise_only_replies": 0}
+noisy_speech:cafe@15dB#0: {"noise": "cafe", "snr": 15, "transcript_ok": true, "replied": true, "noise_only_replies": 0}
+noisy_speech:cafe@15dB#1: {"noise": "cafe", "snr": 15, "transcript_ok": false, "replied": true, "noise_only_replies": 0}
+noisy_speech:cafe@20dB#0: {"noise": "cafe", "snr": 20, "transcript_ok": true, "replied": true, "noise_only_replies": 0}
+noisy_speech:cafe@20dB#1: {"noise": "cafe", "snr": 20, "transcript_ok": true, "replied": true, "noise_only_replies": 0}
+noisy_speech:traffic@5dB#0: {"noise": "traffic", "snr": 5, "transcript_ok": true, "replied": true, "noise_only_replies": 0}
+noisy_speech:traffic@5dB#1: {"noise": "traffic", "snr": 5, "transcript_ok": true, "replied": true, "noise_only_replies": 0}
+noisy_speech:traffic@10dB#0: {"noise": "traffic", "snr": 10, "transcript_ok": true, "replied": true, "noise_only_replies": 0}
+noisy_speech:traffic@10dB#1: {"noise": "traffic", "snr": 10, "transcript_ok": true, "replied": true, "noise_only_replies": 0}
+noisy_speech:traffic@15dB#0: {"noise": "traffic", "snr": 15, "transcript_ok": true, "replied": true, "noise_only_replies": 0}
+noisy_speech:traffic@15dB#1: {"noise": "traffic", "snr": 15, "transcript_ok": true, "replied": true, "noise_only_replies": 0}
+noisy_speech:traffic@20dB#0: {"noise": "traffic", "snr": 20, "transcript_ok": true, "replied": true, "noise_only_replies": 0}
+noisy_speech:traffic@20dB#1: {"noise": "traffic", "snr": 20, "transcript_ok": true, "replied": true, "noise_only_replies": 0}
+noisy_speech:tv@5dB#0: {"noise": "tv", "snr": 5, "transcript_ok": true, "replied": true, "noise_only_replies": 0}
+noisy_speech:tv@5dB#1: {"noise": "tv", "snr": 5, "transcript_ok": true, "replied": true, "noise_only_replies": 0}
+noisy_speech:tv@10dB#0: {"noise": "tv", "snr": 10, "transcript_ok": true, "replied": true, "noise_only_replies": 0}
+noisy_speech:tv@10dB#1: {"noise": "tv", "snr": 10, "transcript_ok": true, "replied": true, "noise_only_replies": 0}
+noisy_speech:tv@15dB#0: {"noise": "tv", "snr": 15, "transcript_ok": true, "replied": true, "noise_only_replies": 0}
+noisy_speech:tv@15dB#1: {"noise": "tv", "snr": 15, "transcript_ok": true, "replied": true, "noise_only_replies": 0}
+noisy_speech:tv@20dB#0: {"noise": "tv", "snr": 20, "transcript_ok": true, "replied": true, "noise_only_replies": 0}
+noisy_speech:tv@20dB#1: {"noise": "tv", "snr": 20, "transcript_ok": true, "replied": true, "noise_only_replies": 0}
+noisy_speech:keyboard@5dB#0: {"noise": "keyboard", "snr": 5, "transcript_ok": true, "replied": true, "noise_only_replies": 0}
+noisy_speech:keyboard@5dB#1: {"noise": "keyboard", "snr": 5, "transcript_ok": true, "replied": true, "noise_only_replies": 0}
+noisy_speech:keyboard@10dB#0: {"noise": "keyboard", "snr": 10, "transcript_ok": true, "replied": true, "noise_only_replies": 0}
+noisy_speech:keyboard@10dB#1: {"noise": "keyboard", "snr": 10, "transcript_ok": true, "replied": true, "noise_only_replies": 0}
+noisy_speech:keyboard@15dB#0: {"noise": "keyboard", "snr": 15, "transcript_ok": true, "replied": true, "noise_only_replies": 0}
+noisy_speech:keyboard@15dB#1: {"noise": "keyboard", "snr": 15, "transcript_ok": true, "replied": true, "noise_only_replies": 0}
+noisy_speech:keyboard@20dB#0: {"noise": "keyboard", "snr": 20, "transcript_ok": true, "replied": true, "noise_only_replies": 0}
+noisy_speech:keyboard@20dB#1: {"noise": "keyboard", "snr": 20, "transcript_ok": true, "replied": true, "noise_only_replies": 0}
+speakerphone_echo_residual_-30dB#0: {"gain_db": -30.0, "rir": true, "stage1_self": 1, "self_interrupts": 0, "stage2_total": 0}
+speakerphone_echo_residual_-30dB#1: {"gain_db": -30.0, "rir": true, "stage1_self": 1, "self_interrupts": 0, "stage2_total": 0}
+speakerphone_echo_residual_-30dB#2: {"gain_db": -30.0, "rir": true, "stage1_self": 0, "self_interrupts": 0, "stage2_total": 0}
+speakerphone_echo_residual_-30dB#3: {"gain_db": -30.0, "rir": true, "stage1_self": 1, "self_interrupts": 0, "stage2_total": 0}
+speakerphone_echo_residual_-30dB#4: {"gain_db": -30.0, "rir": true, "stage1_self": 1, "self_interrupts": 0, "stage2_total": 0}
+speakerphone_echo_residual_-30dB#5: {"gain_db": -30.0, "rir": true, "stage1_self": 1, "self_interrupts": 0, "stage2_total": 0}
+speakerphone_echo_residual_-30dB#6: {"gain_db": -30.0, "rir": true, "stage1_self": 1, "self_interrupts": 0, "stage2_total": 0}
+speakerphone_echo_residual_-30dB#7: {"gain_db": -30.0, "rir": true, "stage1_self": 1, "self_interrupts": 0, "stage2_total": 1}
+speakerphone_echo_raw_-12dB(no_AEC)#0: {"gain_db": -12.0, "rir": true, "stage1_self": 2, "self_interrupts": 1, "stage2_total": 2}
+speakerphone_echo_raw_-12dB(no_AEC)#1: {"gain_db": -12.0, "rir": true, "stage1_self": 3, "self_interrupts": 0, "stage2_total": 1}
+speakerphone_echo_raw_-12dB(no_AEC)#2: {"gain_db": -12.0, "rir": true, "stage1_self": 2, "self_interrupts": 0, "stage2_total": 1}
+speakerphone_echo_raw_-12dB(no_AEC)#3: {"gain_db": -12.0, "rir": true, "stage1_self": 4, "self_interrupts": 0, "stage2_total": 1}
+wrote /Users/shashi/Personal/Projects/Personal/Voxa/docs/reports/robustness.json

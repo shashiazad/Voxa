@@ -1,0 +1,77 @@
+name: ci
+on:
+  push: { branches: [main] }
+  pull_request:
+  workflow_dispatch:
+  schedule: [{ cron: "0 4 * * *" }]     # nightly perf gate
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg17
+        env: { POSTGRES_USER: voxa, POSTGRES_PASSWORD: voxa, POSTGRES_DB: voxa }
+        ports: ["5432:5432"]
+        options: --health-cmd "pg_isready -U voxa" --health-interval 5s --health-retries 10
+      redis:
+        image: redis:7.4-alpine
+        ports: ["6379:6379"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: |
+          uv venv --python 3.11 .venv
+          uv pip install --python .venv/bin/python -r agent/requirements.txt -r api/requirements.txt ./shared pytest pytest-asyncio httpx
+      - name: Fetch models used by the tests (Piper voice, turn detector, embeddings)
+        run: |
+          mkdir -p models && cd models
+          curl -fsSLO https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/amy/low/en_US-amy-low.onnx
+          curl -fsSLO https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/amy/low/en_US-amy-low.onnx.json
+          curl -fsSLO https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/ryan/low/en_US-ryan-low.onnx
+          curl -fsSLO https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/ryan/low/en_US-ryan-low.onnx.json
+          curl -fsSLO https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/lessac/low/en_US-lessac-low.onnx
+          curl -fsSLO https://huggingface.co/rhasspy/piper-voices/resolve/main/en/en_US/lessac/low/en_US-lessac-low.onnx.json
+          cd .. && .venv/bin/python -W ignore -c "from livekit.plugins.turn_detector.english import _EUORunnerEn; _EUORunnerEn._download_files()"
+      - run: .venv/bin/python -m pytest -q tests/unit tests/integration -p no:cacheprovider
+        env: { TEST_ADMIN_DSN: "postgresql://voxa:voxa@localhost:5432/voxa_test", TEST_APP_DSN: "postgresql://voxa_app:voxa_app@localhost:5432/voxa_test" }
+
+  web:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm, cache-dependency-path: web/package-lock.json }
+      - run: cd web && npm ci && npx tsc --noEmit -p dashboard && npm run build
+
+  helm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: azure/setup-helm@v4
+      - run: helm lint infra/helm/voxa && helm template voxa infra/helm/voxa > /dev/null
+
+  # Full stack on a runner: real WebRTC, real Groq. Fails the build if p95 voice-to-voice, false/missed interruption
+  # rates or echo self-interruptions break the budget (tests/perf/perf.py gate). Needs the GROQ_API_KEY secret.
+  perf-gate:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest-8-cores
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - run: cp .env.example .env && echo "GROQ_API_KEY=${{ secrets.GROQ_API_KEY }}" >> .env
+      - run: cd infra && docker compose up -d --build && docker compose run --rm seed
+      - uses: astral-sh/setup-uv@v5
+      - run: uv venv --python 3.11 .venv && uv pip install --python .venv/bin/python livekit==1.1.21 numpy
+      - name: Robustness matrix (LLM mocked so Groq free-tier token limits do not skew interruption results)
+        run: |
+          cd infra && LLM_PROVIDER=mock docker compose up -d --force-recreate agent && sleep 60 && cd ..
+          PYTHONPATH=tests/audio_harness .venv/bin/python tests/audio_harness/matrix.py robustness --reps 20
+      - name: Latency (real LLM + STT)
+        run: |
+          cd infra && docker compose up -d --force-recreate agent && sleep 60 && cd ..
+          PYTHONPATH=tests/audio_harness .venv/bin/python tests/audio_harness/matrix.py latency --n 30
+      - run: .venv/bin/python tests/perf/perf.py report && PERF_LATENCY_ADVISORY=1 .venv/bin/python tests/perf/perf.py gate  # drop the flag once on a paid Groq tier
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: perf-report, path: docs/reports }

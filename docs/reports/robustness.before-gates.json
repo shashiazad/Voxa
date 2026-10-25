@@ -1,0 +1,541 @@
+{
+ "mode": "robustness",
+ "results": [
+  {
+   "kind": "interrupt",
+   "confirmed": true,
+   "stop_ms": 338.742625026498,
+   "audio_after_pause": 0,
+   "missed": false,
+   "late": false,
+   "scenario": "interrupt"
+  },
+  {
+   "kind": "interrupt",
+   "confirmed": true,
+   "stop_ms": 323.13483295729384,
+   "audio_after_pause": 0,
+   "missed": false,
+   "late": false,
+   "scenario": "interrupt"
+  },
+  {
+   "kind": "interrupt",
+   "confirmed": true,
+   "stop_ms": 339.6125829895027,
+   "audio_after_pause": 0,
+   "missed": false,
+   "late": false,
+   "scenario": "interrupt"
+  },
+  {
+   "kind": "interrupt",
+   "confirmed": true,
+   "stop_ms": 352.4792090174742,
+   "audio_after_pause": 0,
+   "missed": false,
+   "late": false,
+   "scenario": "interrupt"
+  },
+  {
+   "kind": "nonint",
+   "what": "cough",
+   "stage1": 0,
+   "stage2": 0,
+   "outcomes": [],
+   "scenario": "cough"
+  },
+  {
+   "kind": "nonint",
+   "what": "cough",
+   "stage1": 0,
+   "stage2": 0,
+   "outcomes": [],
+   "scenario": "cough"
+  },
+  {
+   "kind": "nonint",
+   "what": "cough",
+   "stage1": 0,
+   "stage2": 0,
+   "outcomes": [],
+   "scenario": "cough"
+  },
+  {
+   "kind": "nonint",
+   "what": "cough",
+   "stage1": 0,
+   "stage2": 0,
+   "outcomes": [],
+   "scenario": "cough"
+  },
+  {
+   "kind": "nonint",
+   "what": "door_slam",
+   "stage1": 0,
+   "stage2": 0,
+   "outcomes": [],
+   "scenario": "door_slam"
+  },
+  {
+   "kind": "nonint",
+   "what": "door_slam",
+   "stage1": 0,
+   "stage2": 0,
+   "outcomes": [],
+   "scenario": "door_slam"
+  },
+  {
+   "kind": "nonint",
+   "what": "door_slam",
+   "stage1": 0,
+   "stage2": 0,
+   "outcomes": [],
+   "scenario": "door_slam"
+  },
+  {
+   "kind": "nonint",
+   "what": "door_slam",
+   "stage1": 0,
+   "stage2": 0,
+   "outcomes": [],
+   "scenario": "door_slam"
+  },
+  {
+   "kind": "nonint",
+   "what": "backchannel",
+   "stage1": 1,
+   "stage2": 0,
+   "outcomes": [
+    "backchannel"
+   ],
+   "scenario": "backchannel"
+  },
+  {
+   "kind": "nonint",
+   "what": "backchannel",
+   "stage1": 1,
+   "stage2": 0,
+   "outcomes": [
+    "false"
+   ],
+   "scenario": "backchannel"
+  },
+  {
+   "kind": "nonint",
+   "what": "backchannel",
+   "stage1": 1,
+   "stage2": 0,
+   "outcomes": [
+    "backchannel"
+   ],
+   "scenario": "backchannel"
+  },
+  {
+   "kind": "nonint",
+   "what": "backchannel",
+   "stage1": 1,
+   "stage2": 0,
+   "outcomes": [
+    "backchannel"
+   ],
+   "scenario": "backchannel"
+  },
+  {
+   "kind": "nonint",
+   "what": "noise:cafe",
+   "stage1": 1,
+   "stage2": 1,
+   "outcomes": [],
+   "scenario": "noise_while_speaking:cafe@15dB"
+  },
+  {
+   "kind": "nonint",
+   "what": "noise:cafe",
+   "stage1": 1,
+   "stage2": 1,
+   "outcomes": [],
+   "scenario": "noise_while_speaking:cafe@15dB"
+  },
+  {
+   "kind": "nonint",
+   "what": "noise:cafe",
+   "stage1": 1,
+   "stage2": 1,
+   "outcomes": [],
+   "scenario": "noise_while_speaking:cafe@5dB"
+  },
+  {
+   "kind": "nonint",
+   "what": "noise:cafe",
+   "stage1": 1,
+   "stage2": 1,
+   "outcomes": [],
+   "scenario": "noise_while_speaking:cafe@5dB"
+  },
+  {
+   "kind": "nonint",
+   "what": "noise:traffic",
+   "stage1": 0,
+   "stage2": 0,
+   "outcomes": [],
+   "scenario": "noise_while_speaking:traffic@15dB"
+  },
+  {
+   "kind": "nonint",
+   "what": "noise:traffic",
+   "stage1": 0,
+   "stage2": 0,
+   "outcomes": [],
+   "scenario": "noise_while_speaking:traffic@15dB"
+  },
+  {
+   "kind": "nonint",
+   "what": "noise:traffic",
+   "stage1": 0,
+   "stage2": 0,
+   "outcomes": [],
+   "scenario": "noise_while_speaking:traffic@5dB"
+  },
+  {
+   "kind": "nonint",
+   "what": "noise:traffic",
+   "stage1": 0,
+   "stage2": 0,
+   "outcomes": [],
+   "scenario": "noise_while_speaking:traffic@5dB"
+  },
+  {
+   "kind": "nonint",
+   "what": "noise:tv",
+   "stage1": 1,
+   "stage2": 1,
+   "outcomes": [],
+   "scenario": "noise_while_speaking:tv@15dB"
+  },
+  {
+   "kind": "nonint",
+   "what": "noise:tv",
+   "stage1": 1,
+   "stage2": 1,
+   "outcomes": [],
+   "scenario": "noise_while_speaking:tv@15dB"
+  },
+  {
+   "kind": "nonint",
+   "what": "noise:tv",
+   "stage1": 1,
+   "stage2": 1,
+   "outcomes": [],
+   "scenario": "noise_while_speaking:tv@5dB"
+  },
+  {
+   "kind": "nonint",
+   "what": "noise:tv",
+   "stage1": 1,
+   "stage2": 1,
+   "outcomes": [],
+   "scenario": "noise_while_speaking:tv@5dB"
+  },
+  {
+   "kind": "nonint",
+   "what": "noise:keyboard",
+   "stage1": 0,
+   "stage2": 0,
+   "outcomes": [],
+   "scenario": "noise_while_speaking:keyboard@15dB"
+  },
+  {
+   "kind": "nonint",
+   "what": "noise:keyboard",
+   "stage1": 0,
+   "stage2": 0,
+   "outcomes": [],
+   "scenario": "noise_while_speaking:keyboard@15dB"
+  },
+  {
+   "kind": "nonint",
+   "what": "noise:keyboard",
+   "stage1": 0,
+   "stage2": 0,
+   "outcomes": [],
+   "scenario": "noise_while_speaking:keyboard@5dB"
+  },
+  {
+   "kind": "nonint",
+   "what": "noise:keyboard",
+   "stage1": 0,
+   "stage2": 0,
+   "outcomes": [],
+   "scenario": "noise_while_speaking:keyboard@5dB"
+  },
+  {
+   "kind": "pause",
+   "premature": 0,
+   "replied": true,
+   "scenario": "mid_utterance_pause"
+  },
+  {
+   "kind": "pause",
+   "premature": 0,
+   "replied": true,
+   "scenario": "mid_utterance_pause"
+  },
+  {
+   "kind": "noise",
+   "noise": "cafe",
+   "snr": 5,
+   "transcript_ok": false,
+   "replied": true,
+   "noise_only_replies": 0,
+   "finals": [
+    "thank you."
+   ],
+   "scenario": "noisy_speech:cafe@5dB"
+  },
+  {
+   "kind": "noise",
+   "noise": "cafe",
+   "snr": 10,
+   "transcript_ok": false,
+   "replied": true,
+   "noise_only_replies": 0,
+   "finals": [
+    "thank you for your return."
+   ],
+   "scenario": "noisy_speech:cafe@10dB"
+  },
+  {
+   "kind": "noise",
+   "noise": "cafe",
+   "snr": 15,
+   "transcript_ok": true,
+   "replied": true,
+   "noise_only_replies": 0,
+   "finals": [
+    "what is your return policy for headphones?",
+    "thank you."
+   ],
+   "scenario": "noisy_speech:cafe@15dB"
+  },
+  {
+   "kind": "noise",
+   "noise": "cafe",
+   "snr": 20,
+   "transcript_ok": true,
+   "replied": true,
+   "noise_only_replies": 0,
+   "finals": [
+    "is your return policy for head",
+    "pounds.",
+    "because"
+   ],
+   "scenario": "noisy_speech:cafe@20dB"
+  },
+  {
+   "kind": "noise",
+   "noise": "traffic",
+   "snr": 5,
+   "transcript_ok": true,
+   "replied": true,
+   "noise_only_replies": 0,
+   "finals": [
+    "what is your return policy for headphones?"
+   ],
+   "scenario": "noisy_speech:traffic@5dB"
+  },
+  {
+   "kind": "noise",
+   "noise": "traffic",
+   "snr": 10,
+   "transcript_ok": true,
+   "replied": true,
+   "noise_only_replies": 0,
+   "finals": [
+    "what is your return policy for headphones?"
+   ],
+   "scenario": "noisy_speech:traffic@10dB"
+  },
+  {
+   "kind": "noise",
+   "noise": "traffic",
+   "snr": 15,
+   "transcript_ok": true,
+   "replied": true,
+   "noise_only_replies": 0,
+   "finals": [
+    "what is your return policy for headphones?"
+   ],
+   "scenario": "noisy_speech:traffic@15dB"
+  },
+  {
+   "kind": "noise",
+   "noise": "traffic",
+   "snr": 20,
+   "transcript_ok": true,
+   "replied": true,
+   "noise_only_replies": 0,
+   "finals": [
+    "what is your return policy for headphones?"
+   ],
+   "scenario": "noisy_speech:traffic@20dB"
+  },
+  {
+   "kind": "noise",
+   "noise": "tv",
+   "snr": 5,
+   "transcript_ok": true,
+   "replied": true,
+   "noise_only_replies": 0,
+   "finals": [
+    "that is your return policy for headphones."
+   ],
+   "scenario": "noisy_speech:tv@5dB"
+  },
+  {
+   "kind": "noise",
+   "noise": "tv",
+   "snr": 10,
+   "transcript_ok": true,
+   "replied": true,
+   "noise_only_replies": 0,
+   "finals": [
+    "the outputs are in the break of the phone. it is your return policy for headphones. i'm sorry that that you can take the whole night. the outputs are in the break."
+   ],
+   "scenario": "noisy_speech:tv@10dB"
+  },
+  {
+   "kind": "noise",
+   "noise": "tv",
+   "snr": 15,
+   "transcript_ok": true,
+   "replied": true,
+   "noise_only_replies": 0,
+   "finals": [
+    "the outlook here is a great question. this is your return policy for headphones.",
+    "i just got me to make no right to see all of these friends with friends."
+   ],
+   "scenario": "noisy_speech:tv@15dB"
+  },
+  {
+   "kind": "noise",
+   "noise": "tv",
+   "snr": 20,
+   "transcript_ok": true,
+   "replied": true,
+   "noise_only_replies": 0,
+   "finals": [
+    "it is your return policy for headphones.",
+    "after the meeting day dawned in late, the old meeting room."
+   ],
+   "scenario": "noisy_speech:tv@20dB"
+  },
+  {
+   "kind": "noise",
+   "noise": "keyboard",
+   "snr": 5,
+   "transcript_ok": true,
+   "replied": true,
+   "noise_only_replies": 0,
+   "finals": [
+    "what is your return policy for headphones?"
+   ],
+   "scenario": "noisy_speech:keyboard@5dB"
+  },
+  {
+   "kind": "noise",
+   "noise": "keyboard",
+   "snr": 10,
+   "transcript_ok": true,
+   "replied": true,
+   "noise_only_replies": 0,
+   "finals": [
+    "what is your return policy for headphones?"
+   ],
+   "scenario": "noisy_speech:keyboard@10dB"
+  },
+  {
+   "kind": "noise",
+   "noise": "keyboard",
+   "snr": 15,
+   "transcript_ok": true,
+   "replied": true,
+   "noise_only_replies": 0,
+   "finals": [
+    "what is your return policy for headphones?"
+   ],
+   "scenario": "noisy_speech:keyboard@15dB"
+  },
+  {
+   "kind": "noise",
+   "noise": "keyboard",
+   "snr": 20,
+   "transcript_ok": true,
+   "replied": true,
+   "noise_only_replies": 0,
+   "finals": [
+    "what is your return policy for headphones?"
+   ],
+   "scenario": "noisy_speech:keyboard@20dB"
+  },
+  {
+   "kind": "echo",
+   "gain_db": -30.0,
+   "rir": true,
+   "stage1_self": 0,
+   "self_interrupts": 0,
+   "stage2_total": 0,
+   "scenario": "speakerphone_echo_residual_-30dB"
+  },
+  {
+   "kind": "echo",
+   "gain_db": -30.0,
+   "rir": true,
+   "stage1_self": 2,
+   "self_interrupts": 0,
+   "stage2_total": 0,
+   "scenario": "speakerphone_echo_residual_-30dB"
+  },
+  {
+   "kind": "echo",
+   "gain_db": -30.0,
+   "rir": true,
+   "stage1_self": 1,
+   "self_interrupts": 0,
+   "stage2_total": 0,
+   "scenario": "speakerphone_echo_residual_-30dB"
+  },
+  {
+   "kind": "echo",
+   "gain_db": -30.0,
+   "rir": true,
+   "stage1_self": 1,
+   "self_interrupts": 0,
+   "stage2_total": 1,
+   "scenario": "speakerphone_echo_residual_-30dB"
+  },
+  {
+   "kind": "echo",
+   "gain_db": -12.0,
+   "rir": true,
+   "stage1_self": 4,
+   "self_interrupts": 0,
+   "stage2_total": 1,
+   "scenario": "speakerphone_echo_raw_-12dB(no_AEC)"
+  },
+  {
+   "kind": "echo",
+   "gain_db": -12.0,
+   "rir": true,
+   "stage1_self": 5,
+   "self_interrupts": 0,
+   "stage2_total": 1,
+   "scenario": "speakerphone_echo_raw_-12dB(no_AEC)"
+  }
+ ],
+ "meta": {
+  "when": "2026-10-25 01:06:52",
+  "host": "macOS-27.0.1-arm64-arm-64bit",
+  "tag": "mock-llm, groq-stt"
+ }
+}

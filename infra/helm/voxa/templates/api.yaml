@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-api
+  labels:
+    {{- include "voxa.labels" . | nindent 4 }}
+    app.kubernetes.io/component: api
+spec:
+  replicas: {{ .Values.api.replicas }}
+  selector: { matchLabels: { app.kubernetes.io/instance: {{ .Release.Name }}, app.kubernetes.io/component: api } }
+  template:
+    metadata:
+      labels:
+        {{- include "voxa.labels" . | nindent 8 }}
+        app.kubernetes.io/component: api
+    spec:
+      containers:
+        - name: api
+          image: {{ include "voxa.image" (dict "root" . "name" "api") }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports: [{ containerPort: 8000, name: http }]
+          env:
+            - { name: LIVEKIT_URL, value: {{ .Values.livekit.internalUrl | quote }} }
+            - { name: LIVEKIT_PUBLIC_URL, value: {{ .Values.livekit.url | quote }} }
+            - { name: S3_ENDPOINT, value: {{ .Values.s3.endpoint | quote }} }
+            - { name: S3_PUBLIC_ENDPOINT, value: {{ .Values.s3.publicEndpoint | quote }} }
+            - { name: S3_BUCKET, value: {{ .Values.s3.bucket | quote }} }
+            - { name: SIGNUP_ENABLED, value: {{ ternary "1" "0" .Values.api.signupEnabled | quote }} }
+            - { name: TOOL_ALLOW_PRIVATE, value: {{ ternary "1" "0" .Values.api.toolAllowPrivate | quote }} }
+            {{- include "voxa.secretEnv" (dict "root" . "keys" (list "DATABASE_URL" "DATABASE_ADMIN_URL" "REDIS_URL" "LIVEKIT_API_KEY" "LIVEKIT_API_SECRET" "VOXA_KMS_KEY" "JWT_SECRET" "ADMIN_TOKEN" "S3_ACCESS_KEY" "S3_SECRET_KEY")) | nindent 12 }}
+          readinessProbe: { httpGet: { path: /healthz, port: http }, periodSeconds: 5 }
+          livenessProbe: { httpGet: { path: /healthz, port: http }, periodSeconds: 20, failureThreshold: 3 }
+          resources: {{- toYaml .Values.api.resources | nindent 12 }}
+          {{- include "voxa.secCtx" . | nindent 10 }}
+---
+apiVersion: v1
+kind: Service
+metadata: { name: {{ .Release.Name }}-api }
+spec:
+  selector: { app.kubernetes.io/instance: {{ .Release.Name }}, app.kubernetes.io/component: api }
+  ports: [{ port: 8000, targetPort: http, name: http }]
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata: { name: {{ .Release.Name }}-retention }
+spec:
+  schedule: {{ .Values.retention.schedule | quote }}
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: retention
+              image: {{ include "voxa.image" (dict "root" . "name" "api") }}
+              command: ["python", "-m", "voxa_api.retention"]
+              env:
+                - { name: S3_ENDPOINT, value: {{ .Values.s3.endpoint | quote }} }
+                - { name: S3_BUCKET, value: {{ .Values.s3.bucket | quote }} }
+                {{- include "voxa.secretEnv" (dict "root" . "keys" (list "DATABASE_ADMIN_URL" "S3_ACCESS_KEY" "S3_SECRET_KEY")) | nindent 16 }}

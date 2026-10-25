@@ -1,0 +1,25 @@
+latency#0: 1169 ms llm=openai/gpt-oss-20b server={'gen': 6, 'voice_to_voice_ms': 969, 'llm': 'openai/gpt-oss-20b', 'stt_ms': 661, 'llm_ttft_ms': 468, 'tts_ttfb_ms': 128}
+latency#1: 1360 ms llm=openai/gpt-oss-20b server={'gen': 6, 'voice_to_voice_ms': 1198, 'llm': 'openai/gpt-oss-20b', 'stt_ms': 551, 'llm_ttft_ms': 465, 'tts_ttfb_ms': 710}
+latency#2: 1349 ms llm=openai/gpt-oss-20b server={'gen': 6, 'voice_to_voice_ms': 1237, 'llm': 'openai/gpt-oss-20b', 'stt_ms': 582, 'llm_ttft_ms': 778, 'tts_ttfb_ms': 123}
+latency#3: 1979 ms llm=openai/gpt-oss-20b server={'gen': 6, 'voice_to_voice_ms': 1789, 'llm': 'openai/gpt-oss-20b', 'stt_ms': 1366, 'llm_ttft_ms': 1311, 'tts_ttfb_ms': 99}
+latency#4: 1888 ms llm=openai/gpt-oss-20b server={'gen': 6, 'voice_to_voice_ms': 1749, 'llm': 'openai/gpt-oss-20b', 'stt_ms': 1084, 'llm_ttft_ms': 1577, 'tts_ttfb_ms': -1048}
+latency#5: 1046 ms llm=qwen/qwen3.8-27b server={'gen': 6, 'voice_to_voice_ms': 947, 'llm': 'qwen/qwen3.8-27b', 'stt_ms': 358, 'llm_ttft_ms': 862, 'tts_ttfb_ms': 68}
+latency#6: 993 ms llm=openai/gpt-oss-20b server={'gen': 6, 'voice_to_voice_ms': 843, 'llm': 'openai/gpt-oss-20b', 'stt_ms': 344, 'llm_ttft_ms': 362, 'tts_ttfb_ms': 131}
+latency#7: 891 ms llm=openai/gpt-oss-20b server={'gen': 4, 'voice_to_voice_ms': 767, 'llm': 'openai/gpt-oss-20b', 'stt_ms': 420, 'llm_ttft_ms': 589, 'tts_ttfb_ms': 122}
+latency#8: 1132 ms llm=openai/gpt-oss-20b server={'gen': 6, 'voice_to_voice_ms': 1007, 'llm': 'openai/gpt-oss-20b', 'stt_ms': 471, 'llm_ttft_ms': 882, 'tts_ttfb_ms': 84}
+latency#9: 1166 ms llm=openai/gpt-oss-20b server={'gen': 4, 'voice_to_voice_ms': 1014, 'llm': 'openai/gpt-oss-20b', 'stt_ms': 407, 'llm_ttft_ms': 503, 'tts_ttfb_ms': 122}
+latency#10: 1594 ms llm=openai/gpt-oss-20b server={'gen': 6, 'voice_to_voice_ms': 1386, 'llm': 'openai/gpt-oss-20b', 'stt_ms': 479, 'llm_ttft_ms': 1241, 'tts_ttfb_ms': 120}
+latency#11: 1004 ms llm=openai/gpt-oss-20b server={'gen': 6, 'voice_to_voice_ms': 869, 'llm': 'openai/gpt-oss-20b', 'stt_ms': 390, 'llm_ttft_ms': 407, 'tts_ttfb_ms': 133}
+latency#12: 1458 ms llm=openai/gpt-oss-20b server={'gen': 6, 'voice_to_voice_ms': 1271, 'llm': 'openai/gpt-oss-20b', 'stt_ms': 709, 'llm_ttft_ms': 733, 'tts_ttfb_ms': 129}
+latency#13: 1431 ms llm=openai/gpt-oss-20b server={'gen': 4, 'voice_to_voice_ms': 1274, 'llm': 'openai/gpt-oss-20b', 'stt_ms': 433, 'llm_ttft_ms': 712, 'tts_ttfb_ms': 118}
+latency#14: 1079 ms llm=openai/gpt-oss-20b server={'gen': 6, 'voice_to_voice_ms': 970, 'llm': 'openai/gpt-oss-20b', 'stt_ms': 589, 'llm_ttft_ms': 577, 'tts_ttfb_ms': 71}
+latency#15: 1190 ms llm=openai/gpt-oss-20b server={'gen': 6, 'voice_to_voice_ms': 1033, 'llm': 'openai/gpt-oss-20b', 'stt_ms': 370, 'llm_ttft_ms': 529, 'tts_ttfb_ms': 123}
+latency#16: 888 ms llm=openai/gpt-oss-20b server={'gen': 4, 'voice_to_voice_ms': 710, 'llm': 'openai/gpt-oss-20b', 'stt_ms': 536, 'llm_ttft_ms': 510, 'tts_ttfb_ms': 139}
+latency#17: 1092 ms llm=openai/gpt-oss-20b server={'gen': 7, 'voice_to_voice_ms': 954, 'llm': 'openai/gpt-oss-20b', 'stt_ms': 402, 'llm_ttft_ms': 436, 'tts_ttfb_ms': 110}
+latency#18: 1047 ms llm=openai/gpt-oss-20b server={'gen': 6, 'voice_to_voice_ms': 887, 'llm': 'openai/gpt-oss-20b', 'stt_ms': 444, 'llm_ttft_ms': 497, 'tts_ttfb_ms': 274}
+latency#19: 1209 ms llm=openai/gpt-oss-20b server={'gen': 6, 'voice_to_voice_ms': 996, 'llm': 'openai/gpt-oss-20b', 'stt_ms': 709, 'llm_ttft_ms': 346, 'tts_ttfb_ms': 628}
+latency#20: 1229 ms llm=openai/gpt-oss-20b server={'gen': 6, 'voice_to_voice_ms': 1109, 'llm': 'openai/gpt-oss-20b', 'stt_ms': 396, 'llm_ttft_ms': 975, 'tts_ttfb_ms': 111}
+latency#21: 1067 ms llm=openai/gpt-oss-20b server={'gen': 6, 'voice_to_voice_ms': 932, 'llm': 'openai/gpt-oss-20b', 'stt_ms': 360, 'llm_ttft_ms': 762, 'tts_ttfb_ms': 120}
+latency#22: 1232 ms llm=openai/gpt-oss-20b server={'gen': 4, 'voice_to_voice_ms': 1074, 'llm': 'openai/gpt-oss-20b', 'stt_ms': 486, 'llm_ttft_ms': 434, 'tts_ttfb_ms': 140}
+latency#23: 1464 ms llm=openai/gpt-oss-20b server={'gen': 6, 'voice_to_voice_ms': 1333, 'llm': 'openai/gpt-oss-20b', 'stt_ms': 862, 'llm_ttft_ms': 180, 'tts_ttfb_ms': 814}
+wrote /Users/shashi/Personal/Projects/Personal/Voxa/docs/reports/latency.json

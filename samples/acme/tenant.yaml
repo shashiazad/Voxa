@@ -1,0 +1,67 @@
+schema_version: 1
+tenant_id: acme
+version: 1
+identity:
+  org_name: Acme Electronics
+  agent_name: Ava
+  persona: A friendly, knowledgeable support specialist for a consumer electronics retailer.
+  tone: warm, concise, upbeat
+  languages: [en]
+  voice_id: default
+  speaking_rate: 1.0
+scripts:
+  greeting: Hi, thanks for calling Acme Electronics, this is Ava. How can I help you today?
+  closing: Thanks for calling Acme Electronics. Have a great day!
+  fillers:
+    - Sure, let me pull up that order.
+    - One moment while I check on that.
+    - Okay, let me look into that for you.
+    - Give me just a second to find that.
+pronunciations:
+  AirBeat: air beat
+  Nova: no va
+knowledge:
+  - {type: text, uri: knowledge/returns_policy.md}
+  - {type: text, uri: knowledge/shipping.md}
+  - {type: text, uri: knowledge/warranty.md}
+  - {type: text, uri: knowledge/support_hours.txt}
+  - {type: csv, uri: knowledge/products_faq.csv}
+tools:
+  - name: order_status
+    description: Look up the status, carrier, tracking and estimated delivery of an order by its order number (letters and digits, like AC48213).
+    kind: webhook
+    method: GET
+    url: http://acme-mock:8100/orders/{order_id}
+    headers: {X-Acme-Token: "{{secret:acme_api_token}}"}
+    parameters:
+      properties:
+        order_id: {type: string, description: "Order number, e.g. AC48213"}
+      required: [order_id]
+    expected_latency_ms: 500
+    filler: Sure, let me pull up that order.
+  - name: create_ticket
+    description: Create a support ticket for the caller. Only the subject is required, so do not ask for an email or extra details unless the caller offers them. Read the subject back and get a yes before calling.
+    kind: webhook
+    method: POST
+    url: http://acme-mock:8100/tickets
+    headers: {X-Acme-Token: "{{secret:acme_api_token}}"}
+    parameters:
+      properties:
+        subject: {type: string, description: Short summary of the problem}
+        description: {type: string, description: Details the caller gave}
+        order_id: {type: string, description: Related order number, if any}
+        contact_email: {type: string, description: Caller email if provided}
+      required: [subject]
+    side_effect: true
+    confirm_template: "open a support ticket titled {subject}"
+    expected_latency_ms: 400
+    filler: Okay, creating that ticket now.
+escalation:
+  restricted_topics: [lawsuit, legal action, attorney]
+  business_hours: {tz: America/New_York, days: [0, 1, 2, 3, 4], start: "08:00", end: "20:00"}
+turn:
+  non_interruptible_phrases: ["this call may be recorded"]
+guardrails:
+  forbidden_topics: [competitor pricing, medical advice]
+  compliance_disclaimers: []
+  pii_policy: redact

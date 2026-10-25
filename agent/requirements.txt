@@ -1,0 +1,16 @@
+livekit-agents==1.8.9
+livekit-plugins-silero==1.8.9
+livekit==1.1.21
+numpy>=2.0
+onnxruntime==1.31.0
+faster-whisper==1.2.1
+pyrnnoise==0.4.5
+websockets==17.3
+piper-tts==1.8.0
+num2words==0.5.14
+httpx[http2]==0.28.1
+prometheus-client==0.26.0
+livekit-plugins-turn-detector==1.8.9
+opentelemetry-sdk==1.45.1
+opentelemetry-exporter-otlp-proto-http==1.45.1
+boto3==1.43.118

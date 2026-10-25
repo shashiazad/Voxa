@@ -1,0 +1,17 @@
+groups:
+  - name: voxa
+    rules:
+      # share of "soft pauses" that turned out not to be real interruptions (cough, backchannel, echo, noise)
+      - record: voxa:false_interruption_rate
+        expr: sum(rate(voxa_interruption_total{outcome=~"false|backchannel|echo"}[5m])) / clamp_min(sum(rate(voxa_interruption_total[5m])), 1e-9)
+      - record: voxa:echo_suppressed_rate
+        expr: sum(rate(voxa_interruption_total{outcome="echo"}[5m])) / clamp_min(sum(rate(voxa_interruption_total[5m])), 1e-9)
+      - record: voxa:handoff_rate
+        expr: sum(rate(voxa_handoffs_total[15m])) / clamp_min(sum(rate(voxa_calls_total[15m])), 1e-9)
+      - record: voxa:error_rate
+        expr: sum(rate(voxa_error_total[5m])) / clamp_min(sum(rate(voxa_calls_total[5m])), 1e-9)
+      - alert: VoiceToVoiceP95High
+        expr: histogram_quantile(0.95, sum(rate(voice_to_voice_latency_seconds_bucket[10m])) by (le)) > 1.2
+        for: 10m
+        labels: { severity: page }
+        annotations: { summary: "p95 voice-to-voice latency above the 1.2 s SLO" }

@@ -1,0 +1,104 @@
+{
+ "meta": {
+  "when": "2026-10-25 04:59:29",
+  "host": "macOS-27.0.1-arm64-arm-64bit",
+  "tag": "3 agent worker processes (thread executor, MAX_SESSIONS 40 each), stub STT, mock LLM, local Piper TTS; LiveKit 1.13.10",
+  "note": "**Result: 100 sessions per node was NOT reached on this machine.** The three worker processes plateau at about 4.7 CPU cores (\u2248 1.5 cores per Python process: the GIL bounds one process) and voice-to-voice stays under ~0.9 s up to 20 sessions (p95 1.29 s at 30); at 40 sessions replies stop arriving (overload, no reply measured). So one worker process handles roughly 10-12 calls; 100+ sessions per node means ~9 worker processes on \u2265 16 cores, which is what the Helm defaults assume (`maxSessions: 12`) but which was not demonstrated here. The generator, the SFU and Docker share the same 10-core laptop VM, so absolute numbers are pessimistic; STT/LLM network latency and rate limits are excluded by design. The 'dropped frames' and 'NS+VAD' columns are empty because the Prometheus query returned no data during this run. Before the thread-mode fixes in this phase (shutdown hangs, polling playout) leaked sessions kept burning CPU after calls ended."
+ },
+ "baseline": {
+  "cpu": 0.1595,
+  "mem_mb": 3261.4400000000005
+ },
+ "steps": [
+  {
+   "n": 5,
+   "connected": 5,
+   "connect_errors": 0,
+   "turns": 14,
+   "turns_without_reply": 9,
+   "cpu_cores": 1.3369,
+   "rss_mb": 3344.8959999999997,
+   "cpu_per_session_millicores": 235.48,
+   "mb_per_session": 16.691199999999846,
+   "v2v_p50": 602.7906663366593,
+   "v2v_p95": 634.4626673962921,
+   "dropped": null,
+   "nsvad_p95_ms": null
+  },
+  {
+   "n": 10,
+   "connected": 10,
+   "connect_errors": 0,
+   "turns": 28,
+   "turns_without_reply": 18,
+   "cpu_cores": 1.4503499999999998,
+   "rss_mb": 3527.6800000000003,
+   "cpu_per_session_millicores": 129.08499999999998,
+   "mb_per_session": 26.623999999999977,
+   "v2v_p50": 584.2107083299197,
+   "v2v_p95": 667.8761673974805,
+   "dropped": null,
+   "nsvad_p95_ms": null
+  },
+  {
+   "n": 15,
+   "connected": 15,
+   "connect_errors": 0,
+   "turns": 40,
+   "turns_without_reply": 25,
+   "cpu_cores": 2.35455,
+   "rss_mb": 3881.472,
+   "cpu_per_session_millicores": 146.33666666666667,
+   "mb_per_session": 41.33546666666665,
+   "v2v_p50": 636.6299583460204,
+   "v2v_p95": 869.1038743709214,
+   "dropped": null,
+   "nsvad_p95_ms": null
+  },
+  {
+   "n": 20,
+   "connected": 20,
+   "connect_errors": 0,
+   "turns": 53,
+   "turns_without_reply": 44,
+   "cpu_cores": 3.4232,
+   "rss_mb": 4066.6112000000003,
+   "cpu_per_session_millicores": 163.185,
+   "mb_per_session": 40.25855999999999,
+   "v2v_p50": 655.6174173019826,
+   "v2v_p95": 772.2867083502933,
+   "dropped": null,
+   "nsvad_p95_ms": null
+  },
+  {
+   "n": 30,
+   "connected": 30,
+   "connect_errors": 0,
+   "turns": 71,
+   "turns_without_reply": 65,
+   "cpu_cores": 4.6897400000000005,
+   "rss_mb": 4377.395200000001,
+   "cpu_per_session_millicores": 151.008,
+   "mb_per_session": 37.19850666666668,
+   "v2v_p50": 806.907708349172,
+   "v2v_p95": 1290.9973333589733,
+   "dropped": null,
+   "nsvad_p95_ms": null
+  },
+  {
+   "n": 40,
+   "connected": 40,
+   "connect_errors": 0,
+   "turns": 105,
+   "turns_without_reply": 105,
+   "cpu_cores": 4.68281,
+   "rss_mb": 4801.7408000000005,
+   "cpu_per_session_millicores": 113.08274999999998,
+   "mb_per_session": 38.50752,
+   "v2v_p50": null,
+   "v2v_p95": null,
+   "dropped": null,
+   "nsvad_p95_ms": null
+  }
+ ]
+}

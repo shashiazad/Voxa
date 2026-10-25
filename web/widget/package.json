@@ -1,0 +1,8 @@
+{
+  "name": "@voxa/widget",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": { "build": "node build.mjs" },
+  "dependencies": { "@voxa/client": "0.1.0" },
+  "devDependencies": { "esbuild": "0.28.2" }
+}

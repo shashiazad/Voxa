@@ -1,0 +1,107 @@
+name: voxa
+services:
+  livekit:
+    image: livekit/livekit-server:v1.13.10
+    command: --config /etc/livekit.yaml
+    volumes: [./livekit.yaml:/etc/livekit.yaml:ro]
+    ports:
+      - "7880:7880"
+      - "7881:7881"
+      - "55000-55100:55000-55100/udp"
+  coturn:
+    image: coturn/coturn:4.6.3
+    command: -c /etc/coturn/turnserver.conf
+    volumes: [./coturn/turnserver.conf:/etc/coturn/turnserver.conf:ro]
+    ports:
+      - "3478:3478/udp"
+      - "3478:3478/tcp"
+      - "49160-49200:49160-49200/udp"
+  redis:
+    image: redis:7.4-alpine
+    ports: ["6379:6379"]
+  postgres:
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_USER: voxa
+      POSTGRES_PASSWORD: voxa
+      POSTGRES_DB: voxa
+    ports: ["5432:5432"]
+  acme-mock:
+    build:
+      context: ../samples/acme/backend
+      dockerfile_inline: |
+        FROM python:3.11-slim
+        RUN pip install --no-cache-dir fastapi==0.162.0 uvicorn==0.54.0
+        COPY app.py .
+        CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8100"]
+    environment:
+      ACME_API_TOKEN: ${ACME_API_TOKEN:-acme-dev-token}
+    ports: ["8100:8100"]
+  api:
+    build: { context: .., dockerfile: api/Dockerfile }
+    env_file: [../.env]
+    environment:
+      LIVEKIT_URL: ws://livekit:7880
+      LIVEKIT_PUBLIC_URL: ws://localhost:7880
+    ports: ["8000:8000"]
+    depends_on: [livekit, postgres, redis]
+  seed:
+    build: { context: .., dockerfile: api/Dockerfile }
+    env_file: [../.env]
+    environment: { API_URL: "http://api:8000" }
+    command: ["python", "-m", "voxa_api.seed_acme"]
+    restart: "no"
+    depends_on: [api, acme-mock]
+  web:
+    build: { context: .., dockerfile: web/Dockerfile }
+    environment:
+      API_URL: http://api:8000
+      COOKIE_SECURE: "0"
+    ports: ["3000:3000"]
+    depends_on: [api]
+  s3:
+    image: chrislusf/seaweedfs:4.48
+    command: server -dir=/data -s3 -s3.port=8333 -s3.config=/etc/seaweed/s3.json -ip=s3
+    volumes: [./seaweedfs/s3.json:/etc/seaweed/s3.json:ro]
+    ports: ["8333:8333"]
+  retention:
+    build: { context: .., dockerfile: api/Dockerfile }
+    env_file: [../.env]
+    command: ["python", "-m", "voxa_api.retention"]
+    depends_on: [api]
+  prometheus:
+    image: prom/prometheus:v3.15.1
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./prometheus/rules.yml:/etc/prometheus/rules.yml:ro
+    ports: ["9090:9090"]
+  grafana:
+    image: grafana/grafana:13.2.4
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:-admin}
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+    ports: ["3001:3000"]
+    depends_on: [prometheus]
+  jaeger:
+    image: jaegertracing/all-in-one:1.76.0
+    environment: { COLLECTOR_OTLP_ENABLED: "true" }
+    ports: ["16686:16686"]
+  agent:
+    build: { context: .., dockerfile: agent/Dockerfile }
+    env_file: [../.env]
+    environment:
+      LIVEKIT_URL: ws://livekit:7880
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT-http://jaeger:4318}
+      MAX_SESSIONS: ${MAX_SESSIONS:-12}
+      LLM_PROVIDER: ${LLM_PROVIDER:-}
+      MOCK_REPLY: ${MOCK_REPLY:-}
+      STT_PROVIDER: ${STT_PROVIDER:-}
+      GROQ_MODELS: ${GROQ_MODELS:-}
+      JOB_EXECUTOR: ${JOB_EXECUTOR:-process}
+    stop_grace_period: 10m
+    depends_on: [livekit, redis, postgres, api]
+    # no host port: with `--scale agent=N` every replica serves /metrics on 9100 and Prometheus discovers them via DNS

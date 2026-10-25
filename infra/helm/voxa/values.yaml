@@ -1,0 +1,81 @@
+# Voxa Helm values. LiveKit server (SFU), Postgres+pgvector, Redis and S3 storage are expected to exist already
+# (managed services or their own charts: https://github.com/livekit/livekit-helm). Everything secret lives in one
+# pre-created Secret (see `secrets.existingSecret`), never in values.
+image:
+  registry: ghcr.io/your-org
+  tag: "0.1.0"
+  pullPolicy: IfNotPresent
+
+secrets:
+  existingSecret: voxa-secrets   # keys: DATABASE_URL DATABASE_ADMIN_URL REDIS_URL LIVEKIT_API_KEY LIVEKIT_API_SECRET
+                                 #       VOXA_KMS_KEY JWT_SECRET ADMIN_TOKEN GROQ_API_KEY S3_ACCESS_KEY S3_SECRET_KEY TURN_PASSWORD
+
+livekit:
+  url: wss://livekit.example.com          # what browsers connect to
+  internalUrl: ws://livekit-server.livekit:7880   # what the API/agent connect to (same region as the agent!)
+
+s3:
+  endpoint: https://s3.us-east-1.amazonaws.com
+  publicEndpoint: https://s3.us-east-1.amazonaws.com
+  bucket: voxa-recordings
+
+llm:
+  provider: groq
+  models: "qwen/qwen3.8-27b,openai/gpt-oss-20b,openai/gpt-oss-120b"
+  sttProvider: groq
+
+api:
+  replicas: 2
+  resources: { requests: { cpu: 250m, memory: 1Gi }, limits: { memory: 2Gi } }   # loads the embedding model for KB ingestion
+  signupEnabled: false
+  toolAllowPrivate: false
+
+web:
+  replicas: 2
+  resources: { requests: { cpu: 100m, memory: 256Mi }, limits: { memory: 512Mi } }
+
+agent:
+  # One worker pod runs many calls (thread executor); capacity is reported to the SFU as active_calls / maxSessions
+  # so it stops dispatching to a full pod. Size maxSessions from the load test (docs/reports/latency_interruption.md).
+  replicas: 8
+  maxSessions: 12                 # measured: one Python worker process saturates at ~10-13 calls (GIL-bound, ~1.5 cores)
+  jobExecutor: thread
+  drainTimeoutSeconds: 600        # SIGTERM: stop taking calls, let live calls finish (up to this long)
+  resources: { requests: { cpu: "2", memory: 2Gi }, limits: { memory: 3Gi } }   # ~1.1 GB of models + ~40 MB per call
+  autoscaling:
+    enabled: true
+    minReplicas: 4
+    maxReplicas: 120
+    targetActiveSessionsPerPod: 8    # ~70 % of maxSessions; needs prometheus-adapter exposing voxa_active_sessions as a Pods metric
+    fallbackCpuUtilization: 60       # used when `metric: cpu`
+    metric: pods
+  nodeSelector: {}
+  tolerations: []
+
+retention:
+  schedule: "17 3 * * *"
+
+coturn:
+  enabled: true
+  image: coturn/coturn:4.6.3
+  realm: voxa.example.com
+  user: voxa
+  externalIp: ""                  # the node/LB public IP clients can reach
+  service: { type: LoadBalancer }
+
+ingress:
+  enabled: true
+  className: nginx
+  apiHost: api.voxa.example.com
+  webHost: console.voxa.example.com
+  tls: { secretName: voxa-tls }
+  annotations: {}
+
+observability:
+  serviceMonitor: false           # true if the Prometheus Operator CRDs are installed
+  grafanaDashboard: true          # ConfigMap labelled for the Grafana sidecar
+  otlpEndpoint: ""                # e.g. http://otel-collector.observability:4318
+
+podSecurity:
+  runAsNonRoot: true
+  runAsUser: 10001

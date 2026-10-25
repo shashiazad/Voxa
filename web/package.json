@@ -1,0 +1,23 @@
+{
+  "name": "voxa-web",
+  "private": true,
+  "workspaces": [
+    "client",
+    "dashboard",
+    "widget"
+  ],
+  "scripts": {
+    "build:widget": "npm run build -w widget",
+    "dev": "npm run build:widget && npm run dev -w dashboard",
+    "build": "npm run build:widget && npm run build -w dashboard",
+    "e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1",
+    "typescript": "5.9.3",
+    "@types/node": "26.6.5"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true
+  }
+}

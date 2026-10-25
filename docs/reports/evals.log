@@ -1,0 +1,27 @@
+{"persona": "returns", "task_success": false, "no_hallucination": true, "turns": 2, "v2v_p50": 1800.743333005812, "judge": "Agent gave correct return info but did not provide the refund timeline, so the caller's goal was not fully met.", "tickets_created": 0, "handoff": false}
+CALLER: Hi, I just opened a pair of headphones—can I still return them?
+AGENT: Yes, opened headphones can be returned within thirty days of delivery, as long as they are in working condition and the ear tips are included. Do you have your order number ready?
+CALLER: Sure, my order number is 123456. Will I get a full refund? Thanks. Bye.
+AGENT: I need to clarify that order numbers are usually letters and digits, like A C four, eight two one, three. Is one hundred and twenty-three thousand, four hundred and fifty-six the correct number, or did you mean something else? Also, refunds depend on whether it’s a defect or a change of mind. 
+
+{"persona": "order_status", "task_success": true, "no_hallucination": true, "turns": 2, "v2v_p50": 1445.6784999929368, "judge": "Agent correctly provided the order status, carrier, delivery date, and item matching the ground truth.", "tickets_created": 0, "handoff": false}
+CALLER: Hi, could you tell me where my order A C 4 8 2 1 3 is and which carrier will deliver it?
+AGENT: Sure, let me pull that up for you. Your order A C four eight two one three has shipped and is on its way via UPS, with delivery expected October 28th. The item is the air beat Pro earbuds.
+CALLER: Thanks, that's all. Goodbye!
+AGENT: You're welcome! Have a great day. 
+
+{"persona": "ticket", "task_success": false, "no_hallucination": false, "turns": 0, "judge": "ERROR HTTPStatusError(\"Client error '400 Bad Request' for url 'https://api.groq.com/openai/v1/chat/completions'\\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400\")"}
+ 
+
+{"persona": "out_of_scope", "task_success": true, "no_hallucination": true, "turns": 2, "v2v_p50": 1435.1045840303414, "judge": "The agent correctly admitted lack of info and offered to connect the caller to a specialist, fulfilling the caller's request without providing unsupported facts.", "tickets_created": 0, "handoff": false}
+CALLER: Hi, do you offer a student discount and gift wrapping?
+AGENT: I don't have information on student discounts or gift wrapping in my current guidelines. I can connect you with a person who can help with those details. Would you like me to do that?
+CALLER: Sure, that would be great. Thank you! Goodbye.
+AGENT: I’ll put you through to one of our specialists who can answer that. One moment, please. 
+
+{"persona": "human", "task_success": true, "no_hallucination": true, "turns": 1, "v2v_p50": 1165.8507499960251, "judge": "The agent correctly offered a warm transfer without providing unsupported information.", "tickets_created": 0, "handoff": true}
+CALLER: I need to speak to a real person about a billing dispute.
+AGENT: Of course. I'm connecting 
+
+wrote /Users/shashi/Personal/Projects/Personal/Voxa/docs/reports/evals.json
+error putting to queue: Event loop is closed

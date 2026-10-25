@@ -1,0 +1,6 @@
+apiVersion: v2
+name: voxa
+description: Multi-tenant real-time voice support agents (agent workers, API, dashboard, coturn)
+type: application
+version: 0.1.0
+appVersion: "0.1.0"

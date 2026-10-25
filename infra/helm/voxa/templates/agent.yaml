@@ -1,0 +1,105 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-agent
+  labels:
+    {{- include "voxa.labels" . | nindent 4 }}
+    app.kubernetes.io/component: agent
+spec:
+  {{- if not .Values.agent.autoscaling.enabled }}
+  replicas: {{ .Values.agent.replicas }}
+  {{- end }}
+  strategy: { type: RollingUpdate, rollingUpdate: { maxUnavailable: 0, maxSurge: 25% } }   # never drop capacity during a deploy
+  selector: { matchLabels: { app.kubernetes.io/instance: {{ .Release.Name }}, app.kubernetes.io/component: agent } }
+  template:
+    metadata:
+      labels:
+        {{- include "voxa.labels" . | nindent 8 }}
+        app.kubernetes.io/component: agent
+      annotations: { prometheus.io/scrape: "true", prometheus.io/port: "9100" }
+    spec:
+      # SIGTERM puts the worker in drain: no new calls, live calls finish (up to drainTimeoutSeconds), then it exits
+      terminationGracePeriodSeconds: {{ add .Values.agent.drainTimeoutSeconds 60 }}
+      {{- with .Values.agent.nodeSelector }}
+      nodeSelector: {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.agent.tolerations }}
+      tolerations: {{- toYaml . | nindent 8 }}
+      {{- end }}
+      topologySpreadConstraints:
+        - { maxSkew: 1, topologyKey: kubernetes.io/hostname, whenUnsatisfiable: ScheduleAnyway, labelSelector: { matchLabels: { app.kubernetes.io/component: agent } } }
+      containers:
+        - name: agent
+          image: {{ include "voxa.image" (dict "root" . "name" "agent") }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports: [{ containerPort: 9100, name: metrics }, { containerPort: 8081, name: health }]
+          env:
+            - { name: LIVEKIT_URL, value: {{ .Values.livekit.internalUrl | quote }} }
+            - { name: LLM_PROVIDER, value: {{ .Values.llm.provider | quote }} }
+            - { name: GROQ_MODELS, value: {{ .Values.llm.models | quote }} }
+            - { name: STT_PROVIDER, value: {{ .Values.llm.sttProvider | quote }} }
+            - { name: JOB_EXECUTOR, value: {{ .Values.agent.jobExecutor | quote }} }
+            - { name: MAX_SESSIONS, value: {{ .Values.agent.maxSessions | quote }} }
+            - { name: DRAIN_TIMEOUT_S, value: {{ .Values.agent.drainTimeoutSeconds | quote }} }
+            - { name: S3_ENDPOINT, value: {{ .Values.s3.endpoint | quote }} }
+            - { name: S3_BUCKET, value: {{ .Values.s3.bucket | quote }} }
+            {{- if .Values.observability.otlpEndpoint }}
+            - { name: OTEL_EXPORTER_OTLP_ENDPOINT, value: {{ .Values.observability.otlpEndpoint | quote }} }
+            {{- end }}
+            {{- include "voxa.secretEnv" (dict "root" . "keys" (list "DATABASE_URL" "REDIS_URL" "LIVEKIT_API_KEY" "LIVEKIT_API_SECRET" "VOXA_KMS_KEY" "GROQ_API_KEY" "S3_ACCESS_KEY" "S3_SECRET_KEY")) | nindent 12 }}
+          startupProbe: { httpGet: { path: /, port: health }, periodSeconds: 5, failureThreshold: 60 }   # models load before it can take calls
+          readinessProbe: { httpGet: { path: /, port: health }, periodSeconds: 5 }
+          livenessProbe: { httpGet: { path: /, port: health }, periodSeconds: 20, failureThreshold: 3 }
+          resources: {{- toYaml .Values.agent.resources | nindent 12 }}
+          {{- include "voxa.secCtx" . | nindent 10 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-agent-metrics
+  labels:
+    {{- include "voxa.labels" . | nindent 4 }}
+    app.kubernetes.io/component: agent
+spec:
+  clusterIP: None
+  selector: { app.kubernetes.io/instance: {{ .Release.Name }}, app.kubernetes.io/component: agent }
+  ports: [{ port: 9100, name: metrics }]
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata: { name: {{ .Release.Name }}-agent }
+spec:
+  maxUnavailable: 1
+  selector: { matchLabels: { app.kubernetes.io/instance: {{ .Release.Name }}, app.kubernetes.io/component: agent } }
+{{- if .Values.agent.autoscaling.enabled }}
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata: { name: {{ .Release.Name }}-agent }
+spec:
+  scaleTargetRef: { apiVersion: apps/v1, kind: Deployment, name: {{ .Release.Name }}-agent }
+  minReplicas: {{ .Values.agent.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.agent.autoscaling.maxReplicas }}
+  behavior:
+    scaleUp: { stabilizationWindowSeconds: 0, policies: [{ type: Percent, value: 100, periodSeconds: 30 }] }
+    scaleDown: { stabilizationWindowSeconds: 600, policies: [{ type: Pods, value: 1, periodSeconds: 120 }] }   # drain, don't kill calls
+  metrics:
+    {{- if eq .Values.agent.autoscaling.metric "pods" }}
+    - type: Pods
+      pods:
+        metric: { name: voxa_active_sessions }
+        target: { type: AverageValue, averageValue: {{ .Values.agent.autoscaling.targetActiveSessionsPerPod | quote }} }
+    {{- else }}
+    - type: Resource
+      resource: { name: cpu, target: { type: Utilization, averageUtilization: {{ .Values.agent.autoscaling.fallbackCpuUtilization }} } }
+    {{- end }}
+{{- end }}
+{{- if .Values.observability.serviceMonitor }}
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata: { name: {{ .Release.Name }}-agent }
+spec:
+  selector: { matchLabels: { app.kubernetes.io/instance: {{ .Release.Name }}, app.kubernetes.io/component: agent } }
+  endpoints: [{ port: metrics, interval: 10s }]
+{{- end }}
